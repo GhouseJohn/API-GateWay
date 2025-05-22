@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlock", "BuildingBlock", "{DEA00BA7-3DBB-44B1-88C1-C982731DBE90}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.API", "Service\Catalog\Catalog.API\Catalog.API.csproj", "{CCF28671-68DE-4E7C-B5BD-A538219C1989}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket.API", "Service\Basket\Basket.API\Basket.API.csproj", "{2A9ECFF9-1E7D-4A99-844D-320B695206AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIGateWays", "APIGateWays", "{26362D7E-85C8-48AF-92FC-C928579ADC3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GateWay-API", "APIGateWays\GateWay-API\GateWay-API.csproj", "{E84DA400-C48B-4CC2-AB7E-BC3F157B5965}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +41,10 @@ Global
 		{2A9ECFF9-1E7D-4A99-844D-320B695206AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A9ECFF9-1E7D-4A99-844D-320B695206AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A9ECFF9-1E7D-4A99-844D-320B695206AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E84DA400-C48B-4CC2-AB7E-BC3F157B5965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E84DA400-C48B-4CC2-AB7E-BC3F157B5965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E84DA400-C48B-4CC2-AB7E-BC3F157B5965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E84DA400-C48B-4CC2-AB7E-BC3F157B5965}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +56,6 @@ Global
 		{087391F4-4EB5-48FB-AFD8-3450497510FB} = {DEA00BA7-3DBB-44B1-88C1-C982731DBE90}
 		{CCF28671-68DE-4E7C-B5BD-A538219C1989} = {AC6816B5-14F4-468F-864D-46BB6334D151}
 		{2A9ECFF9-1E7D-4A99-844D-320B695206AE} = {F3FAA064-4413-45BB-8C9E-C4DF3B894E39}
+		{E84DA400-C48B-4CC2-AB7E-BC3F157B5965} = {26362D7E-85C8-48AF-92FC-C928579ADC3B}
 	EndGlobalSection
 EndGlobal
