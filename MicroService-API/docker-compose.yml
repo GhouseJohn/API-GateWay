@@ -1,0 +1,29 @@
+services:
+  catalogdb:
+    image: postgres
+
+  basketdb:
+    image: postgres
+
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Service/Basket/Basket.API/Dockerfile
+
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Service/Catalog/Catalog.API/Dockerfile
+
+
+  gateway-api:
+    image: ${DOCKER_REGISTRY-}gatewayapi
+    build:
+      context: .
+      dockerfile: APIGateWays/GateWay-API/Dockerfile
+volumes:
+      postgres_catalog:
+      postgres_basket:
+
