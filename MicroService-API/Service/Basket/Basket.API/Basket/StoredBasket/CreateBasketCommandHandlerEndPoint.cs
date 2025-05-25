@@ -5,13 +5,13 @@ using MediatR;
 
 namespace Basket.API.Basket.StoredBasket;
 
-public record CreateBasket(ShoppingCart ShoppingCart);
+public record CreateBasket(ShoppingCart Cart);
 public record CreateBasketResponse(string UserName);
 public class CreateBasketCommandHandlerEndPoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("StoredBasket123", async (CreateBasket request, ISender sender) =>
+        app.MapPost("StoredBasket", async (CreateBasket request, ISender sender) =>
         {
             var command = request.Adapt<CreateBasketCommand>();
             var response = await sender.Send(command);

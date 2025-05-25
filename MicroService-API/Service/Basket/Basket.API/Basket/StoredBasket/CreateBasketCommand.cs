@@ -5,20 +5,20 @@ using Marten;
 
 namespace Basket.API.Basket.StoredBasket;
 
-public record CreateBasketCommand(ShoppingCart ShoppingCart) : ICommand<CreateBasketCommandResponse>;
+public record CreateBasketCommand(ShoppingCart Cart) : ICommand<CreateBasketCommandResponse>;
 public record CreateBasketCommandResponse(string userName);
 
 public class createBasketCommandValidation : AbstractValidator<CreateBasketCommand>
 {
     public createBasketCommandValidation()
     {
-        RuleFor(x => x.ShoppingCart.UserName)
+        RuleFor(x => x.Cart.UserName)
             .NotEmpty()
             .WithMessage("UserName is required");
-        RuleFor(x => x.ShoppingCart.Items)
+        RuleFor(x => x.Cart.Items)
             .NotEmpty()
             .WithMessage("Items are required");
-        RuleFor(x => x.ShoppingCart.TotalPrice)
+        RuleFor(x => x.Cart.TotalPrice)
             .GreaterThan(0)
             .WithMessage("TotalPrice must be greater than 0");
     }
@@ -30,9 +30,9 @@ public class CreateBasketCommandHandler(IDocumentSession session) : ICommandHand
 
         try
         {
-            session.Store(request.ShoppingCart);
+            session.Store(request.Cart);
             await session.SaveChangesAsync(cancellationToken);
-            return new CreateBasketCommandResponse(request.ShoppingCart.UserName);
+            return new CreateBasketCommandResponse(request.Cart.UserName);
         }
         catch (Exception ex)
         {

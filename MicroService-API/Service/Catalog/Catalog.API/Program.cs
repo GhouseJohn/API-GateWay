@@ -2,7 +2,9 @@ using BuildingService.Behaviors;
 using BuildingService.Exceptions.Handler;
 using Carter;
 using FluentValidation;
+using HealthChecks.UI.Client;
 using Marten;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,9 @@ builder.Services.AddMarten(opts =>
 }).UseLightweightSessions();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
+//Health Check
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
 
 
 var app = builder.Build();
@@ -32,5 +37,11 @@ var app = builder.Build();
 app.MapCarter();
 
 app.UseExceptionHandler(options => { });
+
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
 app.Run();
