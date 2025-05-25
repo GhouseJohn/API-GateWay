@@ -16,8 +16,6 @@ services:
     build:
       context: .
       dockerfile: Service/Catalog/Catalog.API/Dockerfile
-
-
   gateway-api:
     image: ${DOCKER_REGISTRY-}gatewayapi
     build:
