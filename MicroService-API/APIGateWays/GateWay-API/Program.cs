@@ -1,5 +1,6 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,16 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
 // Optional: Add health checks for the Gateway itself (separate from the UI monitoring)
 builder.Services.AddHealthChecks()
     .AddCheck("Gateway Self Check", () => HealthCheckResult.Healthy("YARP Gateway is alive."));
+
+//rate Limited
+builder.Services.AddRateLimiter(rateLimiterOptions =>
+{
+    rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
+    {
+        options.Window = TimeSpan.FromSeconds(10);
+        options.PermitLimit = 5;
+    });
+});
 
 
 var app = builder.Build();
