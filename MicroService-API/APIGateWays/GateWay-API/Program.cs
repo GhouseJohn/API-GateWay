@@ -15,7 +15,7 @@ builder.Services.AddReverseProxy()
 builder.Services.AddHealthChecksUI(setupSettings: setup =>
 {
     // You can expose an API endpoint for the UI data itself
-    setup.AddHealthCheckEndpoint("Gateway UI API", "/healthchecks-api");
+    // setup.AddHealthCheckEndpoint("Gateway UI API", "/healthchecks-api");
     //setup.AddHealthCheckEndpoint("Catalog Service", "http://catalog.api:8080/health");
     //setup.AddHealthCheckEndpoint("Basket Service", "http://basket.api:8080/health");
 
