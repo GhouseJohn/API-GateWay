@@ -11,12 +11,11 @@ builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 // --- End YARP Services ---
 
-// --- Add Health Checks UI Services ---
 builder.Services.AddHealthChecksUI(setupSettings: setup =>
 {
     // You can expose an API endpoint for the UI data itself
-    // setup.AddHealthCheckEndpoint("Gateway UI API", "/healthchecks-api");
-    //setup.AddHealthCheckEndpoint("Catalog Service", "http://catalog.api:8080/health");
+    setup.AddHealthCheckEndpoint("Gateway UI API", "/healthchecks-api");
+
     //setup.AddHealthCheckEndpoint("Basket Service", "http://basket.api:8080/health");
 
 }).AddInMemoryStorage(); // For production, use .AddSqlServerStorage(), .AddPostgreSqlStorage(), etc.
@@ -25,6 +24,8 @@ builder.Services.AddHealthChecksUI(setupSettings: setup =>
 // Optional: Add health checks for the Gateway itself (separate from the UI monitoring)
 builder.Services.AddHealthChecks()
     .AddCheck("Gateway Self Check", () => HealthCheckResult.Healthy("YARP Gateway is alive."));
+
+
 
 //rate Limited
 builder.Services.AddRateLimiter(rateLimiterOptions =>
@@ -39,14 +40,11 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
 
 var app = builder.Build();
 app.UseRouting(); // YARP needs routing
-
-//app.UseAuthorization();
-// --- Map YARP Reverse Proxy Middleware ---
 app.MapReverseProxy();
-// --- End YARP Reverse Proxy Middleware ---
-
-// --- Map Health Checks UI Endpoints ---
-// This maps the UI dashboard endpoint
+app.UseWhen(context => !context.Request.Path.StartsWithSegments("/health"), appBuilder =>
+{
+    appBuilder.UseHttpsRedirection();
+});
 app.MapHealthChecksUI(setup =>
 {
     setup.UIPath = "/healthchecks-dashboard"; // The URL path to access the UI (e.g., http://localhost:port/healthchecks-dashboard)
@@ -57,6 +55,6 @@ app.MapHealthChecks("/gateway-health", new HealthCheckOptions()
 {
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
-// --- End Health Checks UI Endpoints ---
+app.MapHealthChecks("/health");
 
 app.Run();
