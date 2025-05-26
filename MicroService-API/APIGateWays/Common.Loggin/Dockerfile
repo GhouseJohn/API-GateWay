@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Service/Catalog/Catalog.API/Catalog.API.csproj", "Service/Catalog/Catalog.API/"]
-RUN dotnet restore "./Service/Catalog/Catalog.API/Catalog.API.csproj"
+COPY ["APIGateWays/Common.Loggin/Common.Loggin.csproj", "APIGateWays/Common.Loggin/"]
+RUN dotnet restore "./APIGateWays/Common.Loggin/Common.Loggin.csproj"
 COPY . .
-WORKDIR "/src/Service/Catalog/Catalog.API"
-RUN dotnet build "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/APIGateWays/Common.Loggin"
+RUN dotnet build "./Common.Loggin.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Common.Loggin.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Catalog.API.dll"]
+ENTRYPOINT ["dotnet", "Common.Loggin.dll"]
