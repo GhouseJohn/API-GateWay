@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlock\BuildingService\BuildingService.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlock\Common.Loggin\Common.Loggin.csproj" />
   </ItemGroup>
 
 </Project>

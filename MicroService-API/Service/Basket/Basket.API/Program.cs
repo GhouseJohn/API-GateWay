@@ -1,10 +1,12 @@
 using BuildingService.Behaviors;
 using BuildingService.Exceptions.Handler;
 using Carter;
+using Common.Loggin;
 using FluentValidation;
 using HealthChecks.UI.Client;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,7 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
 
-
+builder.Host.UseSerilog(SeriLogger.Configure);
 var app = builder.Build();
 
 app.MapCarter();
